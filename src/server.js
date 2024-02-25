@@ -2,7 +2,7 @@
 const express = require('express');
 
 //llamado a otros documentos
-// const { dbConnection } = require('./config/database');
+const { dbConnection } = require('./database/conexiondb');
 
 class Server{
 
@@ -10,13 +10,19 @@ class Server{
         this.app = express()
         this.port = process.env.PORT || 4100
 
+        //conectar base de datos
+        this.conectarDB();
+
         //routers
         this.routers() ;
         
     }
+    async conectarDB(){
+        await dbConnection();
+    }
     routers(){
         this.app.get('/', function (req, res) {
-            res.send('Hello World Myrian Hernandez');
+            res.send('Conexion a la base de datos');
         });
     }
     listen(){
